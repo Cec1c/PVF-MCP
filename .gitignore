@@ -1,0 +1,20 @@
+# Binary
+pvf-mcp.exe
+pvf-mcp
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.exe~
+*.test
+
+# Go
+*.out

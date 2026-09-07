@@ -16,6 +16,9 @@
 
 </div>
 
+> [!NOTE]
+> PVF-MCP 当前连接同一台电脑的 `http://localhost:27000`。AI 客户端通过 **stdio** 启动 PVF-MCP，无需把这个 HTTP 地址填作 MCP 服务地址。
+
 ## 能做什么？
 
 - **找到需要的数据。** 搜索物品、技能和 NPC，按物品代码查文件，读取 LST 索引与图标。
@@ -31,8 +34,6 @@
 ### 1. 准备 pvfUtility
 
 在 Windows 10 / 11 上打开 [pvfUtility](https://github.com/ledyxerago/pvfUtilityForEAssistant)（≥ 2022.9.30.2），加载一个 PVF 文件，并确认 HTTP API 可用。
-
-PVF-MCP 当前连接同一台电脑的 `http://localhost:27000`。AI 客户端通过 **stdio** 启动 PVF-MCP，无需把这个 HTTP 地址填作 MCP 服务地址。
 
 ### 2. 下载并接入 AI 客户端
 
@@ -81,13 +82,14 @@ codex mcp add pvf-mcp -- "C:\Tools\pvf-mcp\pvf-mcp.exe"
 | 获取编辑器当前文档与选中项 | `get_active_document` / `get_selected_files` |
 | 导入、删除或保存文件 | `import_file` / `delete_file` / `save_pvf` |
 
+> [!IMPORTANT]
+> 写操作先改变已加载的 PVF，调用 `save_pvf` 才会写入磁盘。修改前保留备份，并通过 `output_path` 指定另存路径。
+
 结构化修改的完整流程：
 
 ```text
 get_file_data → 修改 JSON → serialize_file_data → import_file → save_pvf
 ```
-
-写操作先改变已加载的 PVF，调用 `save_pvf` 才会写入磁盘。修改前保留备份，并通过 `output_path` 指定另存路径。
 
 全部工具、参数和示例见 [Agent 工具手册](AGENT.md)。
 

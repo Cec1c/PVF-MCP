@@ -16,6 +16,9 @@ A Go-based Model Context Protocol (MCP) server with 26 tools. Download one execu
 
 </div>
 
+> [!NOTE]
+> PVF-MCP currently connects to `http://localhost:27000` on the same computer. Your AI client launches PVF-MCP over **stdio**; this HTTP address is not an MCP server URL.
+
 ## What Can It Do?
 
 - **Find the data you need.** Search items, skills, and NPCs; resolve item codes to files; read LST indexes and icons.
@@ -31,8 +34,6 @@ For example, ask your AI client:
 ### 1. Prepare pvfUtility
 
 On Windows 10 / 11, open [pvfUtility](https://github.com/ledyxerago/pvfUtilityForEAssistant) (≥ 2022.9.30.2), load a PVF file, and make sure its HTTP API is available.
-
-PVF-MCP currently connects to `http://localhost:27000` on the same computer. Your AI client launches PVF-MCP over **stdio**; this HTTP address is not an MCP server URL.
 
 ### 2. Download and Connect
 
@@ -81,13 +82,14 @@ If the connection fails, check that pvfUtility is running, a PVF is loaded, and 
 | Read the active editor document and selection | `get_active_document` / `get_selected_files` |
 | Import, delete, or save files | `import_file` / `delete_file` / `save_pvf` |
 
+> [!IMPORTANT]
+> Write operations change the loaded PVF in memory. Call `save_pvf` to persist them to disk. Keep a backup before editing and use `output_path` to save to a separate file.
+
 A complete structured-edit workflow:
 
 ```text
 get_file_data → Edit JSON → serialize_file_data → import_file → save_pvf
 ```
-
-Write operations change the loaded PVF in memory. Call `save_pvf` to persist them to disk. Keep a backup before editing and use `output_path` to save to a separate file.
 
 See the [Agent Tool Reference](AGENT.md) for all tools, parameters, and examples.
 

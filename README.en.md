@@ -8,16 +8,16 @@
 [![Release](https://img.shields.io/github/v/release/Cec1c/PVF-MCP?sort=date&display_name=tag&style=flat-square&label=Release&color=2EA44F)](https://github.com/Cec1c/PVF-MCP/releases/latest)
 [![Stars](https://img.shields.io/github/stars/Cec1c/PVF-MCP?style=flat-square&label=Stars&color=E3B341)](https://github.com/Cec1c/PVF-MCP/stargazers)
 
-Let AI search, read, and edit Dungeon & Fighter PVF game data through pvfUtility.
+Open a PVF in pvfUtility, then ask your AI client to find items, read scripts, and edit game data.
 
-A Go-based Model Context Protocol (MCP) server with 26 tools. Download one executable and connect it to an AI client that supports stdio.
+PVF-MCP connects the editor to your AI client through 26 tools. Download one executable and add it as a stdio MCP server.
 
 [简体中文](README.md) ｜ [Download](https://github.com/Cec1c/PVF-MCP/releases/latest) ｜ [Quick Start](#quick-start) ｜ [Tool Reference](AGENT.md)
 
 </div>
 
 > [!NOTE]
-> PVF-MCP currently connects to `http://localhost:27000` on the same computer. Your AI client launches PVF-MCP over **stdio**; this HTTP address is not an MCP server URL.
+> Connection path: your AI client launches PVF-MCP over **stdio**, then PVF-MCP accesses pvfUtility at `http://localhost:27000` on the same computer. Configure the client with the executable path below.
 
 ## What Can It Do?
 
@@ -25,7 +25,7 @@ A Go-based Model Context Protocol (MCP) server with 26 tools. Download one execu
 - **Edit structured content.** Read PVF data as a JSON tree, change fields, serialize it back to text, then import and save.
 - **Work with your editor.** Read the active document and selected files in pvfUtility so the AI can work on what you are viewing.
 
-For example, ask your AI client:
+Once connected, start with an item lookup:
 
 > Find the SP+20 skill book and list its file path, item code, and current price. Do not change anything yet.
 
@@ -66,7 +66,7 @@ Merge this entry into the client's existing MCP configuration. Follow that clien
 
 ### 3. Verify the Connection
 
-Restart or reload your AI client, then ask it to call `get_version` and `get_loaded_pvf_path`. Once they return the pvfUtility version and the loaded PVF path, you are ready to use the tools.
+Reload the client's MCP configuration and call `get_version` followed by `get_loaded_pvf_path`. Confirm the editor version and PVF file, then start searching or editing.
 
 If the connection fails, check that pvfUtility is running, a PVF is loaded, and its HTTP API uses port `27000`. The current server address is fixed in [`client.go`](client.go).
 
@@ -103,7 +103,7 @@ cd PVF-MCP
 go build -o pvf-mcp.exe .
 ```
 
-Connect the built executable using the steps above. The repository also includes [`install.ps1`](install.ps1) (PowerShell 5.1+), but the script and older [`INSTALL.md`](INSTALL.md) contain legacy client configuration paths. For Codex, use the `codex mcp add` command on this page.
+For Codex, connect the built executable with the `codex mcp add` command on this page. The repository also retains [`install.ps1`](install.ps1) (PowerShell 5.1+) and the older [`INSTALL.md`](INSTALL.md); adjust their legacy client paths to match your environment.
 
 ## Documentation and Credits
 

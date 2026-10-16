@@ -8,16 +8,16 @@
 [![发行版](https://img.shields.io/github/v/release/Cec1c/PVF-MCP?sort=date&display_name=tag&style=flat-square&label=%E5%8F%91%E8%A1%8C%E7%89%88&color=2EA44F)](https://github.com/Cec1c/PVF-MCP/releases/latest)
 [![Stars](https://img.shields.io/github/stars/Cec1c/PVF-MCP?style=flat-square&label=Stars&color=E3B341)](https://github.com/Cec1c/PVF-MCP/stargazers)
 
-让 AI 通过 pvfUtility 搜索、读取和编辑 DNF PVF 游戏数据。
+在 pvfUtility 中打开 PVF，让 AI 帮你查找物品、读取脚本并修改游戏数据。
 
-基于 Go 的 MCP（Model Context Protocol）服务，提供 26 个工具；下载单个可执行文件，即可接入支持 stdio 的 AI 客户端。
+PVF-MCP 用 26 个工具连接编辑器和 AI 客户端。下载一个可执行文件，通过 stdio 接入即可使用。
 
 [English](README.en.md) ｜ [下载](https://github.com/Cec1c/PVF-MCP/releases/latest) ｜ [快速开始](#快速开始) ｜ [工具手册](AGENT.md)
 
 </div>
 
 > [!NOTE]
-> PVF-MCP 当前连接同一台电脑的 `http://localhost:27000`。AI 客户端通过 **stdio** 启动 PVF-MCP，无需把这个 HTTP 地址填作 MCP 服务地址。
+> 连接方式：AI 客户端通过 **stdio** 启动 PVF-MCP，再由 PVF-MCP 访问本机 pvfUtility 的 `http://localhost:27000`。客户端填写下方的可执行文件路径。
 
 ## 能做什么？
 
@@ -25,7 +25,7 @@
 - **按结构修改内容。** 将 PVF 解析为 JSON 树，修改字段后转回原始文本，导入并保存。
 - **配合编辑器工作。** 获取 pvfUtility 当前打开的文档和选中文件，让 AI 接着你正在看的内容处理。
 
-例如，你可以这样提问：
+连接完成后，可以先查一件物品：
 
 > 找到 SP+20 技能书，列出文件路径、物品代码和当前价格，先不要修改。
 
@@ -66,7 +66,7 @@ codex mcp add pvf-mcp -- "C:\Tools\pvf-mcp\pvf-mcp.exe"
 
 ### 3. 确认连接
 
-重启或重新加载 AI 客户端，让它依次调用 `get_version` 和 `get_loaded_pvf_path`。能返回 pvfUtility 版本和当前 PVF 路径，就可以开始使用。
+重新加载 AI 客户端的 MCP 配置，依次调用 `get_version` 和 `get_loaded_pvf_path`，确认连接到预期的编辑器版本与 PVF 文件，再开始查询或编辑。
 
 连接失败时，先检查 pvfUtility 是否已启动、PVF 是否已加载，以及 HTTP API 是否使用端口 `27000`；当前服务地址固定在 [`client.go`](client.go) 中。
 
@@ -103,7 +103,7 @@ cd PVF-MCP
 go build -o pvf-mcp.exe .
 ```
 
-构建后按上方步骤接入客户端。仓库也提供 [`install.ps1`](install.ps1)（PowerShell 5.1+），但脚本及旧版 [`INSTALL.md`](INSTALL.md) 中包含历史客户端配置路径；Codex 请使用本页的 `codex mcp add` 命令。
+构建后，Codex 用户运行本页的 `codex mcp add` 命令接入。仓库还保留了 [`install.ps1`](install.ps1)（PowerShell 5.1+）和旧版 [`INSTALL.md`](INSTALL.md)，其中的历史客户端路径需按实际环境调整。
 
 ## 文档与来源
 
